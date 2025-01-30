@@ -25,8 +25,9 @@ st.markdown(
 st.markdown("<h1 style='text-align: center; color: #003366;'>Dashboard de Mercadoria Movimentada pelo Setor Aquaviário por País e Produto</h1>", unsafe_allow_html=True)
 
 # Carregar os dados
+@st.cache_data
 def load_data():
-    file_path = "/mnt/data/data.csv.xlsx"
+    file_path = "data.csv.xlsx"
     df = pd.read_excel(file_path)
     df = df.rename(columns={
         'Ano': 'ano',
@@ -57,17 +58,13 @@ df_summary = df_filtered.groupby("ano", as_index=False)["movimentacao_total_t"].
 
 total_movimentacao = df[df["ano"] == ano_selecionado]["movimentacao_total_t"].sum()
 
-df_summary["percentual"] = (df_summary["movimentacao_total_t"] / total_movimentacao) * 100
-
-# Formatar os números para exibição
-df_summary["movimentacao_total_t"] = df_summary["movimentacao_total_t"].apply(lambda x: f"{x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
-df_summary["percentual"] = df_summary["percentual"].apply(lambda x: f"{x:.2f}%")
-
-# Exibir tabela de dados agregados
-if df_summary.empty:
-    st.write("Nenhum dado disponível para os filtros selecionados.")
-else:
+if not df_summary.empty:
+    df_summary["percentual"] = (df_summary["movimentacao_total_t"] / total_movimentacao) * 100
+    df_summary["movimentacao_total_t"] = df_summary["movimentacao_total_t"].apply(lambda x: f"{x:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+    df_summary["percentual"] = df_summary["percentual"].apply(lambda x: f"{x:.2f}%")
     st.dataframe(df_summary, width=1000)
+else:
+    st.write("Nenhum dado disponível para os filtros selecionados.")
 
 # Crédito 
 st.write("Fonte: Estatístico Aquaviário ANTAQ")
