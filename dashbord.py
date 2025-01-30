@@ -27,7 +27,8 @@ st.markdown("<h1 style='text-align: center; color: #003366;'>Dashboard de Mercad
 # Carregar os dados
 @st.cache_data
 def load_data():
-    file_path = "/mnt/data/data.csv.xlsx"
+    file_path = "data.csv.xlsx"
+    
     df = pd.read_excel(file_path)
     df = df.rename(columns={
         'Ano': 'ano',
