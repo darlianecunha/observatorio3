@@ -25,7 +25,6 @@ st.markdown(
 st.markdown("<h1 style='text-align: center; color: #003366;'>Dashboard de Mercadoria Movimentada pelo Setor Aquaviário por País e Produto</h1>", unsafe_allow_html=True)
 
 # Carregar os dados
-@st.cache_data
 def load_data():
     file_path = "/mnt/data/data.csv.xlsx"
     df = pd.read_excel(file_path)
