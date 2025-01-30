@@ -22,7 +22,7 @@ st.markdown(
 )
 
 # Cabeçalho do Dashboard
-st.markdown("<h1 style='text-align: center; color: #003366;'>Dashboard de Mercadoria Movimentada por país pelo Setor Aquaviário</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #003366;'>Dashboard de Mercadoria Movimentada pelo Setor Aquaviário</h1>", unsafe_allow_html=True)
 
 # Carregar os dados
 @st.cache_data
@@ -33,7 +33,7 @@ def load_data():
         'Ano': 'ano',
         'Nomenclatura Simplificada': 'tipo_produto',
         'Total de Movimentação Portuária\nem toneladas (t)': 'movimentacao_total_t',
-        'País': 'pais'
+        'País Origem': 'pais'
     })
     df["ano"] = df["ano"].astype(int).astype(str)  # Garantir formato correto de ano
     return df
